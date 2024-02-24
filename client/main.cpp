@@ -52,8 +52,14 @@ int main(int argc, char** argv) {
         if (!strcmp(message, "q") || !strcmp(message, "Q"))
             break;
 
-        send(hSocket, message, strlen(message), 0); 
-        int strLen = recv(hSocket, message, BUF_SIZE - 1, 0);
+        int strLen = send(hSocket, message, strlen(message), 0);
+        int recvLen = 0;
+        while (recvLen < strLen) {
+            int recvCnt = recv(hSocket, message, BUF_SIZE - 1, 0);
+            if (recvCnt == -1)
+                ErrorHandling("read() error!");
+            recvLen += recvCnt;
+        }
         message[strLen] = NULL;
         cout << message << endl;
     }
