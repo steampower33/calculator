@@ -1,3 +1,3 @@
 # calculator
 
-tcp/ip calculator
+tcp calculator
